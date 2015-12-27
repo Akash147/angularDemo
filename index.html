@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css"> -->
+        <link rel="stylesheet" href="css/vendor/angular-material.min.css" />
+        <style type="text/css">input               {
+  font-size:18px;
+  padding:5px 10px 5px 10px;
+  display:block;
+  width:300px;
+  border:none;
+  border-bottom:1px solid #cacaca;
+}
+input:focus         { outline:none; }
+hp-card {
+    max-width: 500px;
+}</style>
+    </head>
+    <body layout="column" ng-app="myApp" ng-controller="SimpleController" ng-cloak layout-fill>
+        <md-toolbar md-padding layout="row" class="md-whiteframe-z2" layout-padding>
+            <h5>Angular Material - Starter App</h5>
+        </md-toolbar>
+        <md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column">
+            <div flex="50" flex-sm="100" flex-xs="100" layout="column">
+                <hp-card type="summary_large_image" card="1"></hp-card>
+                <hp-card type="summary_card" card="1"></hp-card>
+                <hp-card type="gallery_card" card="1"></hp-card>
+                <md-card>
+                    <md-card-title>
+                        <md-card-title-media>
+                            <div class="md-media-sm card-media">
+                                <md-icon md-svg-icon="social:android" aria-label="android "></md-icon>
+                            </div>
+                        </md-card-title-media>
+                        <md-card-title-text>
+                            <span class="md-headline">HamroPatro released</span>
+                            <span class="md-subhead">Description goes here</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <img ng-src="images/2.jpg" />
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button>Action 1</md-button>
+                        <md-button>Action 2</md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </md-content>
+        <!-- Angular Material requires Angular.js Libraries -->
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script> -->
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script> -->
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script> -->
+        <!-- Angular Material Library -->
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script> -->
+        <script src="scripts/vendor/angular.min.js"></script>
+        <script src="scripts/vendor/angular-animate.min.js"></script>
+        <script src="scripts/vendor/angular-aria.min.js"></script>
+        <!-- <script src="scripts/vendor/angular-messages.min.js"></script> -->
+        <script src="scripts/vendor/angular-material.min.js"></script>
+        <script type="text/javascript">var app = angular.module('myApp', ['ngMaterial']);
+app.constant('globalVar', {cardViewsPath: 'views/cards/'});
+app.controller('SimpleController', function($scope) {
+    $scope.names = [
+    'Akash Shrestha',
+    'Indu Shrestha',
+    'Karuna Shrestha',
+    'Asmita Shrestha',
+    'Phebe Grace'
+    ];
+});
+app.directive('hpCard', function(globalVar) {
+  return {
+    restrict: 'E',
+    scope: {
+      card: '=card'
+    },
+    templateUrl: function(elem, attr){
+        return globalVar.cardViewsPath + 'card_' + attr.type + '.html';
+    }
+  };
+});</script>
+    </body>
+</html>
