@@ -26,8 +26,8 @@ hp-card {
             <h5>Angular Material - Starter App</h5>
         </md-toolbar>
         <md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column" flex>
-            <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in names">
-                <hp-card type="gallery_card" card="card"></hp-card>
+            <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in cards">
+                <hp-card card="card" type="{{card.type}}"></hp-card>
             </div>
         </md-content>
         <!-- Angular Material requires Angular.js Libraries -->
@@ -42,33 +42,34 @@ hp-card {
         <script src="scripts/vendor/angular-aria.min.js"></script>
         <!-- <script src="scripts/vendor/angular-messages.min.js"></script> -->
         <script src="scripts/vendor/angular-material.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.6.0/angular-material-icons.min.js"></script> 
         <script type="text/javascript">var app = angular.module('myApp', ['ngMaterial']);
 app.constant('globalVar', {cardViewsPath: 'views/cards/'});
 app.controller('SimpleController', function($scope) {
-    $scope.names = [
-    {title:'Akash Shrestha', desc:'A Description goes here'},
-    {title:'Bkash Shrestha', desc:'B Description goes here'},
-    {title:'Ckash Shrestha', desc:'C Description goes here'},
-    {title:'Dkash Shrestha', desc:'D Description goes here'}
+    $scope.cards = [
+    {title:'Akash Shrestha', desc:'A Description goes here', type:'summary_large_image'},
+    {title:'Bkash Shrestha', desc:'B Description goes here', type:'gallery_card'},
+    {title:'Ckash Shrestha', desc:'C Description goes here', type:'summary_card'},
+    {title:'Dkash Shrestha', desc:'D Description goes here', type:'summary_large_image'}
     ];
 });
-app.directive('hpCard', function(globalVar) {
+app.directive('hpCard', ['globalVar', function(globalVar) {
   return {
     restrict: 'E',
     scope: {
-      card: '=card',
-      editMode: '=true'
+      card: '=card'
     },
-    templateUrl: function(elem, attr){
-        return globalVar.cardViewsPath + 'card_' + attr.type + '.html';
-    }
+    link: function(scope, element, attrs) {
+        attrs.$observe("type",function(v){
+            scope.contentUrl = globalVar.cardViewsPath + 'card_' + v + '.html';
+        });
+    },
+    template: '<div ng-include="contentUrl"></div>'
   };
-});
+}]);
 app.config(function($mdIconProvider) {
     $mdIconProvider
       .icon('menu:more', 'images/svg/moreButton.svg',24);
-  })
-</script>
+  });
+        </script>
     </body>
 </html>

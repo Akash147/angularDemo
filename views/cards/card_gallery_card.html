@@ -21,7 +21,16 @@
             </md-button>
             <md-menu-content>
                 <md-menu-item>
-                    <md-button ng-click="card.blockEdit = !card.blockEdit">Do Something</md-button>
+                    <md-button ng-click="card.blockEdit = !card.blockEdit">Edit Card</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="card.type = 'summary_large_image'">Summary_Large_Image</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="card.type = 'gallery_card'">Gallary_Card</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="card.type = 'summary_card'">Summary_Card</md-button>
                 </md-menu-item>
             </md-menu-content>
         </md-menu>
