@@ -23,7 +23,7 @@ hp-card {
     </head>
     <body layout="column" ng-app="myApp" ng-controller="SimpleController" ng-cloak layout-fill>
         <md-toolbar md-padding layout="row" class="md-whiteframe-z2" layout-padding>
-            <h5>Angular Material - Starter App</h5>
+            <h5 ng-click="newButton()">Angular Material - Starter App</h5>
         </md-toolbar>
         <md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column" flex>
             <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in cards">
@@ -42,34 +42,6 @@ hp-card {
         <script src="scripts/vendor/angular-aria.min.js"></script>
         <!-- <script src="scripts/vendor/angular-messages.min.js"></script> -->
         <script src="scripts/vendor/angular-material.min.js"></script>
-        <script type="text/javascript">var app = angular.module('myApp', ['ngMaterial']);
-app.constant('globalVar', {cardViewsPath: 'views/cards/'});
-app.controller('SimpleController', function($scope) {
-    $scope.cards = [
-    {title:'Akash Shrestha', desc:'A Description goes here', type:'summary_large_image'},
-    {title:'Bkash Shrestha', desc:'B Description goes here', type:'gallery_card'},
-    {title:'Ckash Shrestha', desc:'C Description goes here', type:'summary_card'},
-    {title:'Dkash Shrestha', desc:'D Description goes here', type:'summary_large_image'}
-    ];
-});
-app.directive('hpCard', ['globalVar', function(globalVar) {
-  return {
-    restrict: 'E',
-    scope: {
-      card: '=card'
-    },
-    link: function(scope, element, attrs) {
-        attrs.$observe("type",function(v){
-            scope.contentUrl = globalVar.cardViewsPath + 'card_' + v + '.html';
-        });
-    },
-    template: '<div ng-include="contentUrl"></div>'
-  };
-}]);
-app.config(function($mdIconProvider) {
-    $mdIconProvider
-      .icon('menu:more', 'images/svg/moreButton.svg',24);
-  });
-        </script>
+        <script type="text/javascript" src="scripts/app.js"></script>
     </body>
 </html>
