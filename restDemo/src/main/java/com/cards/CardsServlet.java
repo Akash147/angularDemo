@@ -22,9 +22,6 @@ public class CardsServlet extends HttpServlet {
         resp.setHeader("Access-Control-Allow-Origin", "*");
 		
 		List<String> pathComponents = Utilities.stripRequestUrl(req);
-		if(pathComponents!=null && pathComponents.size()>0) {
-			resp.getWriter().println(pathComponents);
-		}
 		
 		if(pathComponents!=null && pathComponents.size()>0) {
 			switch (pathComponents.get(0)) {

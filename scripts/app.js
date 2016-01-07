@@ -26,6 +26,7 @@ app.factory('remoteFactory', ['$http', function($http){
 
 app.controller('SimpleController', function($scope,remoteFactory) {
     $scope.cards = [
+    {type: 'empty'},
     {title:'Akash Shrestha', description:'A Description goes here', type:'summary_large_image'},
     {title:'Bkash Shrestha', description:'B Description goes here', type:'gallery_card'},
     {title:'Ckash Shrestha', description:'C Description goes here', type:'summary_card'},
@@ -33,7 +34,7 @@ app.controller('SimpleController', function($scope,remoteFactory) {
     ];
 
     $scope.newButton = function(){
-        remoteFactory.getMetaForNew('{uri: "http://app/petrol"}').then( function(data){
+        remoteFactory.getMetaForNew('{uri: "https://www.youtube.com/watch?v=DV0TJZ7Kp40"}').then( function(data){
             console.log(data);
             var newCard= {type: 'summary_large_image'};
             if(typeof data.title != 'undefined')
@@ -54,7 +55,8 @@ app.directive('hpCard', ['globalVar', function(globalVar) {
   return {
     restrict: 'E',
     scope: {
-      card: '=card'
+      card: '=card',
+      action: '&'
     },
     link: function(scope, element, attrs) {
         attrs.$observe("type",function(v){

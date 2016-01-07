@@ -1,0 +1,17 @@
+<md-card>
+    <md-card-content layout-padding layout-wrap>
+        <div layout="column">
+            <form name="newCardForm">
+                <md-input-container class="md-block">
+                    <input name="newCardURL" ng-model="newCardURL" type="url" placeholder="Paste URL here..." required/>
+                    <div ng-show="newCardForm.newCardURL.$error.url">
+                        <div ng-message="required">Invalid URL</div>
+                    </div>
+                </md-input-container>
+            </form>
+        </div>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-button class="md-raised md-primary" ng-disabled="newCardForm.newCardURL.$error.required || newCardForm.newCardURL.$error.url" ng-click="action()">Create</md-button>
+    </md-card-actions>
+</md-card>

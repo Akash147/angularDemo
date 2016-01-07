@@ -10,8 +10,8 @@
   border-bottom:1px solid #cacaca;
 }
 input:focus         { outline:none; }
-hp-card {
-    max-width: 500px;
+hp-card, .hp-card {
+    width: 500px;
 }
 .thumbnail {
     width: 50px;
@@ -23,13 +23,34 @@ hp-card {
     </head>
     <body layout="column" ng-app="myApp" ng-controller="SimpleController" ng-cloak layout-fill>
         <md-toolbar md-padding layout="row" class="md-whiteframe-z2" layout-padding>
-            <h5 ng-click="newButton()">Angular Material - Starter App</h5>
+            <h5>Angular Material - Starter App</h5>
         </md-toolbar>
         <md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column" flex>
+            <div class="md-padding" layout="column" layout-wrap layout-align="center start">
+                <md-card class="hp-card">
+                    <md-card-content layout-padding layout-wrap>
+                        <div layout="column">
+                            <form name="newCardForm">
+                                <md-input-container class="md-block">
+                                    <input name="newCardURL" ng-model="newCardURL" type="url" placeholder="Paste URL here..." required/>
+                                    <div ng-show="newCardForm.newCardURL.$error.url">
+                                        <div ng-message="required">Invalid URL</div>
+                                    </div>
+                                </md-input-container>
+                            </form>
+                        </div>
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button class="md-raised md-primary" ng-disabled="newCardForm.newCardURL.$error.required || newCardForm.newCardURL.$error.url" ng-click="newButton()">Create</md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
             <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in cards">
-                <hp-card card="card" type="{{card.type}}"></hp-card>
+                <hp-card card="card" type="{{card.type}}" action="newButton()"></hp-card>
             </div>
         </md-content>
+
+
         <!-- Angular Material requires Angular.js Libraries -->
         <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
         <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script> -->
