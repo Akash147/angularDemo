@@ -6,7 +6,13 @@ app.factory('remoteFactory', ['$http', function($http){
     var service= {};
 
     service.getMetaForNew = function(param){
-        var promise = $http.post(_url+'new/','data: '+param);
+        var postData = {data: param};
+        var promise = $http({
+            method: 'POST',
+            url: _url+'new/',
+            data: postData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
         promise = promise.then(function (response) {
             return response.data;
         },function(response){
@@ -27,7 +33,7 @@ app.controller('SimpleController', function($scope,remoteFactory) {
     ];
 
     $scope.newButton = function(){
-        remoteFactory.getMetaForNew('{uri: "hamropatro://app/radio"}').then( function(data){
+        remoteFactory.getMetaForNew('{uri: "http://app/petrol"}').then( function(data){
             console.log(data);
         }, function(data){
             console.log(data);
