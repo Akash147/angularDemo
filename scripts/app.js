@@ -9,8 +9,8 @@ app.factory('remoteFactory', ['$http', function($http){
         var postData = {data: param};
         var promise = $http({
             method: 'POST',
-            url: _url+'new/',
-            data: postData,
+            url: _url+'meta/',
+            data: 'data='+param,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
         promise = promise.then(function (response) {
@@ -26,15 +26,25 @@ app.factory('remoteFactory', ['$http', function($http){
 
 app.controller('SimpleController', function($scope,remoteFactory) {
     $scope.cards = [
-    {title:'Akash Shrestha', desc:'A Description goes here', type:'summary_large_image'},
-    {title:'Bkash Shrestha', desc:'B Description goes here', type:'gallery_card'},
-    {title:'Ckash Shrestha', desc:'C Description goes here', type:'summary_card'},
-    {title:'Dkash Shrestha', desc:'D Description goes here', type:'summary_large_image'}
+    {title:'Akash Shrestha', description:'A Description goes here', type:'summary_large_image'},
+    {title:'Bkash Shrestha', description:'B Description goes here', type:'gallery_card'},
+    {title:'Ckash Shrestha', description:'C Description goes here', type:'summary_card'},
+    {title:'Dkash Shrestha', description:'D Description goes here', type:'summary_large_image'}
     ];
 
     $scope.newButton = function(){
         remoteFactory.getMetaForNew('{uri: "http://app/petrol"}').then( function(data){
             console.log(data);
+            var newCard= {type: 'summary_large_image'};
+            if(typeof data.title != 'undefined')
+                newCard.title = data.title;
+            if(typeof data.description != 'undefined')
+                newCard.description = data.description;
+            if(typeof data.image != 'undefined')
+                newCard.image = data.image;
+            if(typeof data.link != 'undefined')
+                newCard.link = data.link;
+            $scope.cards.unshift(newCard);
         }, function(data){
             console.log(data);
         });

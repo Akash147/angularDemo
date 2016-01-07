@@ -15,4 +15,13 @@
         <servlet-name>Jersey Web Application</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CardServlet</servlet-name>
+        <servlet-class>com.cards.CardsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CardServlet</servlet-name>
+        <url-pattern>/cards/*</url-pattern>
+    </servlet-mapping>
 </web-app>

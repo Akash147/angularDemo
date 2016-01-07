@@ -1,14 +1,15 @@
 package com.akash;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import com.cards.UrlToMetaData;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("my")
+@Path("xyz/")
+@Produces("application/json")
 public class MyResource {
 
     /**
@@ -17,9 +18,12 @@ public class MyResource {
      *
      * @return String that will be returned as a text/plain response.
      */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it! Howdy do";
+    @POST
+    @Path("new/")
+    public UrlToMetaData.NewRequest queryNewCard(@FormParam("data") final String data) {
+        UrlToMetaData.NewRequest n = new UrlToMetaData.NewRequest();
+        n.setTitle("Howdy");
+        n.setDescription(data);
+        return n;
     }
 }
