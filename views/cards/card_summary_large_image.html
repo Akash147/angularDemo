@@ -11,8 +11,8 @@
                 <span type="text" ng-show="!card.blockEdit">{{card.title}}</span>
             </span>
             <span class="md-subhead">
-                <input type="text" ng-model="card.description" ng-show="card.blockEdit"/>
-                <span type="text" ng-show="!card.blockEdit">{{card.description}}</span>
+                <input type="text" ng-model="card.site" ng-show="card.blockEdit"/>
+                <span type="text" ng-show="!card.blockEdit">{{card.site}}</span>
             </span>
         </md-card-header-text>
         <md-menu layout-align="right end" md-position-mode="target-right target">
@@ -35,11 +35,11 @@
             </md-menu-content>
         </md-menu>
     </md-card-header>
-    <img ng-src="images/2.jpg" />
+    <img ng-src="{{card.image}}" style="height: 300px;" />
     <md-card-title>
         <md-card-title-text>
-            <span class="md-title">Enigma to include LaraCroft in app page</span>
-            <span class="md-subhead">Just announchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh h h h hh hhhhhhhhhhhh hhhhhhhhhhhhh hhhhhhhhhhhhhhhhhhhhhhh hhhhhhhhhhhhhed to release new ways to show LaraCroft in application</span>
+            <span class="md-title">{{card.title}}</span>
+            <span class="md-subhead">{{card.description}}</span>
         </md-card-title-text>
         <span></span>
     </md-card-title>

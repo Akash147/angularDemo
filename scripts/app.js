@@ -25,29 +25,37 @@ app.factory('remoteFactory', ['$http', function($http){
 }])
 
 app.controller('SimpleController', function($scope,remoteFactory) {
+    $scope.showMaskingProgress = false;
     $scope.cards = [
-    {type: 'empty'},
-    {title:'Akash Shrestha', description:'A Description goes here', type:'summary_large_image'},
-    {title:'Bkash Shrestha', description:'B Description goes here', type:'gallery_card'},
-    {title:'Ckash Shrestha', description:'C Description goes here', type:'summary_card'},
-    {title:'Dkash Shrestha', description:'D Description goes here', type:'summary_large_image'}
+    {title:'Akash Shrestha', description:'A Description goes here', image:'images/2.jpg', type:'summary_large_image'},
+    {title:'Bkash Shrestha', description:'B Description goes here', image:'images/1.jpg', type:'gallery_card'},
+    {title:'Ckash Shrestha', description:'C Description goes here', image:'images/3.jpg', type:'summary_card'},
+    {title:'Dkash Shrestha', description:'D Description goes here', image:'images/4.jpg', type:'summary_large_image'}
     ];
 
     $scope.newButton = function(){
-        remoteFactory.getMetaForNew('{uri: "https://www.youtube.com/watch?v=DV0TJZ7Kp40"}').then( function(data){
+        $scope.showMaskingProgress = true;
+        var url = $scope.newCardURL;
+        if(typeof url == 'undefined')
+            return;
+        remoteFactory.getMetaForNew('{uri: "'+url+'"}').then( function(data){
             console.log(data);
-            var newCard= {type: 'summary_large_image'};
+            var newCard= {type: 'summary_large_image', blockEdit:true};
             if(typeof data.title != 'undefined')
                 newCard.title = data.title;
             if(typeof data.description != 'undefined')
                 newCard.description = data.description;
             if(typeof data.image != 'undefined')
                 newCard.image = data.image;
-            if(typeof data.link != 'undefined')
-                newCard.link = data.link;
+            if(typeof data.url != 'undefined')
+                newCard.link = data.url;
+            if(typeof data.site != 'undefined')
+                newCard.site = data.site;
             $scope.cards.unshift(newCard);
+            $scope.showMaskingProgress = false;
         }, function(data){
             console.log(data);
+            $scope.showMaskingProgress = false;
         });
     };
 });
