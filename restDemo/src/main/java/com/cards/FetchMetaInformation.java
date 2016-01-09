@@ -40,7 +40,7 @@ public class FetchMetaInformation {
 			metaInformations.put("title", getTitleFromDocument(sourceDocument));
 		}
 		if(!metaInformations.containsKey("site")){
-			metaInformations.put("site", url.getHost());
+			metaInformations.put("site", url.getHost().replaceFirst("www.",""));
 		}
 
 		if(!metaInformations.containsKey("url")){
@@ -97,19 +97,17 @@ public class FetchMetaInformation {
 	private Map<String, String> parseAttributes(Map<String, String> map) {
 		Map<String, String> toReturn = new HashMap<String,String>();
 		for (Map.Entry<String, String> entry : map.entrySet()) {
-			System.out.println(entry.getKey() + "::::" + entry.getValue());
 		    if(isTitle(entry.getKey()))
 				toReturn.put("title", entry.getValue());
 		    else if(isDescription(entry.getKey()))
 		    	toReturn.put("description", entry.getValue());
-//		    else if(isImage(entry.getKey()))
-//		    	toReturn.put("image", entry.getValue());
+		    else if(isImage(entry.getKey()))
+		    	toReturn.put("image", entry.getValue());
 		    else if(isLink(entry.getKey()))
 		    	toReturn.put("url", entry.getValue());
 			else if(isSiteName(entry.getKey()))
 				toReturn.put("site", entry.getValue());
 		}
-		System.out.println("======================");
 		return toReturn;
 	}
 

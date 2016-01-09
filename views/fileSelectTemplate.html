@@ -1,0 +1,73 @@
+<md-dialog aria-label="Photo Gallery " ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Photo Gallery</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="images/svg/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content >
+            <span class="md-warn">{{errorMsg}}</span>
+            <div class="md-dialog-content" style="min-height:600px" >
+                <p>Please select file from the gallery, you can also add one or more files by pressing 'ADD NEW FILES' or dragging files to image grid from your desktop</p>
+                <div layout="row" layout-sm="column" ng-hide="mode_url">
+                    <button style="height:40px" class="md-raised md-primary md-button md-ink-ripple" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="3000" ngf-max-size="5MB" ng-disabled="loading" >
+                    <label >Add New Files</label>
+                    </button>
+                    <md-button class="md-raised" style="height:40px" ng-click="showURLInput(true)" >
+                        <label >Add Image URL</label>
+                    </md-button>
+                    <span flex></span>
+                    <md-input-container md-no-float class="md-block" ng-hide="loading" flex="33%" >
+                        <input ng-model="search" type="text" placeholder="Search">
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-sm="column" ng-show="mode_url">
+                    <md-input-container class="md-block" flex>
+                        <label>Image URL</label>
+                        <input type="url" required name="imageURL" ng-model="customURL" 
+                            ng-change="inputURLChanged()"
+                            id="imageURL"
+                            />
+                        <div ng-messages="form1.imageURL.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="pattern">URL not valid</div>
+                        </div>
+                    </md-input-container>
+                    <md-button class="md-raised" style="height:38px" ng-click="showURLInput(false)" >Cancel</md-button>
+                    <md-button class="md-raised md-primary" style="height:40px" ng-disabled="!urlValid" ng-click="insertCustomURL()" >Insert</md-button>
+                </div>
+                <div layout="row" layout-sm="column" layout-align="space-around" ng-show="loading" >
+                    <md-progress-circular md-mode="{{progressMode}}" md-diameter="96"></md-progress-circular>
+                </div>
+                <md-grid-list md-cols-sm="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="5" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" ng-model="files" ngf-drag-over-class="'dragover'" ngf-drop="uploadFiles($files, $invalidFiles)" accept="image/*" ngf-max-height="3000" ngf-max-size="5MB" ngf-multiple="false" ngf-pattern="'image/*'" >
+                    <md-grid-tile ng-repeat="f in files" style="font:smaller">
+                        <img ngf-thumbnail="f || '/thumb.jpg'" style="width:100%"/>
+                        <md-grid-tile-footer >
+                            <h3 style="width:150px">{{f.progress}} %</h3>
+                            <md-progress-linear md-mode="determinate" value="{{f.progress}}"></md-progress-linear>
+                        </md-grid-tile-footer>
+                    </md-grid-tile>
+                    <md-grid-tile style="background:#f5f5f5" ng-repeat="x in fileList.items | filter: search" >
+                        <img 
+                            ng-class="{selected: x.selected,not_selected: !x.selected}"  
+                            ng-click="toogleSelection(x)"
+                            style="margin: auto; max-width: 100%;"  src="{{x.thumbnailURL}}" 
+                            />
+                    </md-grid-tile >
+                </md-grid-list>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" style="padding-top:24px;padding-bottom:24px;">
+            <!-- <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                More on Wikipedia
+                </md-button> -->
+            <span flex></span>
+            <md-button ng-click="cancel()" style="margin-right:10px;">Cancel</md-button>
+            <md-button ng-disabled="!itemSelected" class="md-raised md-primary" ng-click="answer('')" style="margin-right:16px;">{{action}}</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
