@@ -43,7 +43,7 @@
                 <span type="text" ng-show="!card.blockEdit">{{card.title}}</span>
             </span>
             <span class="md-subhead">
-                <a href="#" editable-text="card.description" buttons="no" ng-show="card.blockEdit">{{ card.description || 'Description' }}</a>
+                <a href="#" editable-textarea="card.description" buttons="no" ng-show="card.blockEdit">{{ card.description || 'Description' }}</a>
                 <span type="text" ng-show="!card.blockEdit">{{card.description}}</span>
             </span>
         </md-card-title-text>
@@ -54,7 +54,10 @@
         </md-card-title-media>
     </md-card-title>
     <md-card-actions layout="row" layout-align="end center">
-        <md-button class="md-raised md-primary">View on Web</md-button>
+        <md-button class="md-raised md-primary" ng-show="!card.blockEdit">{{card.callToAction}}</md-button>
+        <a href="#" ng-show="card.blockEdit" editable-select="card.callToAction" buttons="no" e-ng-options="s.value as s.text for s in callToActionOptions">
+            Select {{ card.callToAction }}
+        </a>
     </md-card-actions>
     </div>
     <div class="editActionBlock" ng-show="card.blockEdit" ng-include src="'views/cards/cardEditOptionsBottomSheet.html'"></div>

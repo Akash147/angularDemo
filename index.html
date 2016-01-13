@@ -31,6 +31,13 @@ input:focus         { outline:none; }
 hp-card, .hp-card {
     width: 500px;
 }
+hp-card img{
+    display: block;
+    margin: 0 auto;
+}
+hp-card.notPublished md-card {
+    background: #cacaca;
+}
 .thumbnail {
     width: 50px;
     height: 50px;
@@ -66,12 +73,14 @@ hp-card, .hp-card {
                             </div>
                         </md-card-content>
                         <md-card-actions layout="row" layout-align="end center">
+                            <md-switch class="md-primary" ng-model="publishedOnly.meta.published">Published</md-switch>    
                             <md-button class="md-raised md-primary" ng-disabled="newCardForm.newCardURL.$error.required || newCardForm.newCardURL.$error.url" ng-click="newButton()">Create</md-button>
                         </md-card-actions>
                     </md-card>
                 </div>
-                <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in cards">
-                    <hp-card card="card" type="{{card.type}}" action="newButton()"></hp-card>
+
+                <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in cards | filter:publishedOnly ">
+                    <hp-card card="card" ng-class='{notPublished: !card.meta.published}' type="{{card.type}}" action="newButton()"></hp-card>
                 </div>
             </md-content>
             <!-- Angular Material requires Angular.js Libraries -->

@@ -27,12 +27,11 @@ app.factory('remoteFactory', ['$http', function($http){
 app.controller('SimpleController', function($scope,remoteFactory) {
     $scope.showMaskingProgress = false;
     $scope.cards = [
-    {title:'Ckash Shrestha', description:'C Description goes here', image:'images/3.jpg', type:'summary_card'},
-    {title:'Akash Shrestha', description:'A Description goes here', image:'images/2.jpg', type:'summary_large_image'},
-    {title:'Bkash Shrestha', description:'B Description goes here', image:'images/1.jpg', type:'gallery_card'},
-    {title:'Dkash Shrestha', description:'D Description goes here', image:'images/4.jpg', type:'summary_large_image'}
+    {title:'Ckash Shrestha', description:'C Description goes here', image:'images/3.jpg', type:'summary_card', meta:{published: true}},
+    {title:'Akash Shrestha', description:'A Description goes here', image:'images/2.jpg', type:'summary_large_image', meta:{published: false}},
+    {title:'Bkash Shrestha', description:'B Description goes here', image:'images/1.jpg', type:'gallery_card', meta:{published: false}},
+    {title:'Dkash Shrestha', description:'D Description goes here', image:'images/4.jpg', type:'summary_large_image', meta:{published: false}}
     ];
-
     $scope.newButton = function(){
         $scope.showMaskingProgress = true;
         var url = $scope.newCardURL;
@@ -74,27 +73,25 @@ app.directive('hpCard', ['globalVar','$timeout', function(globalVar,$timeout) {
             // console.log(element.find('img'));
         },
         post: function(scope, element, attrs) {
-            
-            // element.find('img').each().on('load', function() {
-            //   element.addClass('in');
-            // }).on('error', function() {
-            //   //
-            // });
-            // element.find('img').$watch('ngSrc', function(newVal) {
-            //   element.removeClass('in');
-            // });
-            // console.log(angular.element(element).find('img'));
             $timeout(function () {
-                    element.find('img').bind('load', function (event) {
-                        console.log(event);
-                        // $(this).addClass('no-progress');
-                        // console.log(this);
-                    })
+                element.find('img').watch("ngSrc",function(v){
+                    element.find('img').addClass('progress');
                 });
+                element.find('img').bind('load', function (event) {
+                    console.log(event);
+                    element.find('img').removeClass('progress');
+                });
+            });
         }
     },
     template: '<div ng-include="contentUrl"></div>',
     controller: ['$scope','$mdBottomSheet', '$mdDialog', '$mdMedia', function($scope,$mdBottomSheet, $mdDialog, $mdMedia) {
+        $scope.callToActionOptions = [
+            {value: 'Download', text: 'Download This'},
+            {value: 'View', text: 'View on Web'},
+            {value: 'Play', text: 'Click to Play'},
+            {value: 'Watch', text: 'Watch Video'}
+        ]; 
         $scope.enableEdit = function($event){
             $scope.backUpCard = JSON.parse(JSON.stringify($scope.card));
             $scope.card.blockEdit = !$scope.card.blockEdit;
@@ -118,8 +115,8 @@ app.directive('hpCard', ['globalVar','$timeout', function(globalVar,$timeout) {
                 console.log(answer);
                 $scope.card[imageDestination]=answer[0];
             }, function() {
-                
-            });  
+            });
+
         };
         $scope.save = function($event) {
             $scope.backUpCard = null;
