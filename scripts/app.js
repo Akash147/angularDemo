@@ -59,28 +59,52 @@ app.controller('SimpleController', function($scope,remoteFactory) {
         });
     };
 });
-app.directive('hpCard', ['globalVar', function(globalVar) {
+app.directive('hpCard', ['globalVar','$timeout', function(globalVar,$timeout) {
   return {
     restrict: 'E',
     scope: {
       card: '=card',
       action: '&'
     },
-    link: function(scope, element, attrs) {
-        attrs.$observe("type",function(v){
-            scope.contentUrl = globalVar.cardViewsPath + 'card_' + v + '.html';
-        });
+    link: {
+        pre: function(scope, element, attrs) {
+            attrs.$observe("type",function(v){
+                scope.contentUrl = globalVar.cardViewsPath + 'card_' + v + '.html';
+            });
+            // console.log(element.find('img'));
+        },
+        post: function(scope, element, attrs) {
+            
+            // element.find('img').each().on('load', function() {
+            //   element.addClass('in');
+            // }).on('error', function() {
+            //   //
+            // });
+            // element.find('img').$watch('ngSrc', function(newVal) {
+            //   element.removeClass('in');
+            // });
+            // console.log(angular.element(element).find('img'));
+            $timeout(function () {
+                    element.find('img').bind('load', function (event) {
+                        console.log(event);
+                        // $(this).addClass('no-progress');
+                        // console.log(this);
+                    })
+                });
+        }
     },
     template: '<div ng-include="contentUrl"></div>',
     controller: ['$scope','$mdBottomSheet', '$mdDialog', '$mdMedia', function($scope,$mdBottomSheet, $mdDialog, $mdMedia) {
-        $scope.enableEdit = function(card, $event){
-            card.blockEdit = !card.blockEdit;
+        $scope.enableEdit = function($event){
+            $scope.backUpCard = JSON.parse(JSON.stringify($scope.card));
+            $scope.card.blockEdit = !$scope.card.blockEdit;
         };
-        $scope.disableEdit = function(card){
-            card.blockEdit = false;
+        $scope.cancelEdit = function() {
+            $scope.card = JSON.parse(JSON.stringify($scope.backUpCard));
+            $scope.card.blockEdit = false;
         };
-        $scope.changeImage = function(card, imageDestination){
-            if(!card.blockEdit) return;
+        $scope.changeImage = function(imageDestination){
+            if(!$scope.card.blockEdit) return;
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
             $mdDialog.show({
                 controller: FileDialogController,
@@ -92,10 +116,14 @@ app.directive('hpCard', ['globalVar', function(globalVar) {
             })
             .then(function(answer) {
                 console.log(answer);
-                card[imageDestination]=answer[0];
+                $scope.card[imageDestination]=answer[0];
             }, function() {
                 
             });  
+        };
+        $scope.save = function($event) {
+            $scope.backUpCard = null;
+            $scope.card.blockEdit = false;
         };
     }]
   };
