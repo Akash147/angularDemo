@@ -1,64 +1,41 @@
 <md-card>
-<div ng-class="{dotted : card.blockEdit}">
-    <md-card-header>
-        <md-card-title-media>
-            <div class="md-media-lg card-media">
-                <img ng-click="changeImage(card)" class="thumbnail md-whiteframe-z1" src="http://1.gravatar.com/avatar/a11ed7e9f44c3bb20aadf4185a245aaf?s=150&d=mm&r=g" />
-            </div>
-        </md-card-title-media>
-        <md-card-header-text>
-            <span class="md-title">
-                <a href="#" editable-text="card.site" buttons="no" ng-show="card.blockEdit">{{ card.site || 'Site Name' }}</a>
-                <span type="text" ng-show="!card.blockEdit">{{card.site}}</span>
-            </span>
-            <span class="md-subhead">
-                <a href="#" editable-text="card.siteDesc" buttons="no" ng-show="card.blockEdit">{{ card.siteDesc || 'Site Description' }}</a>
-                <span type="text" ng-show="!card.blockEdit">{{card.siteDesc}}</span>
-            </span>
-        </md-card-header-text>
-        <md-menu layout-align="right end" md-position-mode="target-right target">
-            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                <md-icon md-svg-icon="menu:more"></md-icon>
-            </md-button>
-            <md-menu-content>
-                <md-menu-item>
-                    <md-button ng-click="enableEdit(card, $event)">Edit Card</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="card.type = 'summary_large_image'">Summary_Large_Image</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="card.type = 'gallery_card'">Gallary_Card</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="card.type = 'summary_card'">Summary_Card</md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
-    </md-card-header>
-    <md-card-title>
-        <md-card-title-text>
-            <span class="md-title">
-                <a href="#" editable-text="card.title" buttons="no" ng-show="card.blockEdit">{{ card.title || 'Content Title' }}</a>
-                <span type="text" ng-show="!card.blockEdit">{{card.title}}</span>
-            </span>
-            <span class="md-subhead">
-                <a href="#" editable-textarea="card.description" buttons="no" ng-show="card.blockEdit">{{ card.description || 'Description' }}</a>
-                <span type="text" ng-show="!card.blockEdit">{{card.description}}</span>
-            </span>
-        </md-card-title-text>
-        <md-card-title-media>
-            <div class="md-media-lg card-media">
-                <img ng-click="changeImage('image')" ng-src="{{card.image}}" style="width: 150px; height: 150px; " />
-            </div>
-        </md-card-title-media>
-    </md-card-title>
-    <md-card-actions layout="row" layout-align="end center">
-        <md-button class="md-raised md-primary" ng-show="!card.blockEdit">{{card.callToAction}}</md-button>
-        <a href="#" ng-show="card.blockEdit" editable-select="card.callToAction" buttons="no" e-ng-options="s.value as s.text for s in callToActionOptions">
-            Select {{ card.callToAction }}
-        </a>
-    </md-card-actions>
+    <div ng-class="{dotted : card.blockEdit}">
+        <md-card-header>
+            <md-card-title-media>
+                <div class="md-media-lg card-media">
+                    <img ng-click="changeImage(card)" class="thumbnail md-whiteframe-z1" src="http://1.gravatar.com/avatar/a11ed7e9f44c3bb20aadf4185a245aaf?s=150&d=mm&r=g" />
+                </div>
+            </md-card-title-media>
+            <md-card-header-text>
+                <span class="md-title">
+                    <a href="#" editable-text="card.site" buttons="no" ng-show="card.blockEdit">{{ card.site || 'Site Name' }}</a>
+                    <span type="text" ng-show="!card.blockEdit">{{card.site}}</span>
+                </span>
+                <span class="md-subhead">
+                    <a href="#" editable-text="card.siteDesc" buttons="no" ng-show="card.blockEdit">{{ card.siteDesc || 'Site Description' }}</a>
+                    <span type="text" ng-show="!card.blockEdit">{{card.siteDesc}}</span>
+                </span>
+            </md-card-header-text>
+            <div ng-include src="'views/cards/cardOptionsMenu.html'"></div>
+        </md-card-header>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-title">
+                    <a href="#" editable-text="card.title" buttons="no" ng-show="card.blockEdit">{{ card.title || 'Content Title' }}</a>
+                    <span type="text" ng-show="!card.blockEdit">{{card.title}}</span>
+                </span>
+                <span class="md-subhead">
+                    <a href="#" editable-textarea="card.description" ng-show="card.blockEdit">{{ card.description || 'Description' }}</a>
+                    <span type="text" ng-show="!card.blockEdit">{{card.description}}</span>
+                </span>
+            </md-card-title-text>
+            <md-card-title-media>
+                <div class="md-media-lg card-media">
+                    <img ng-click="changeImage('image')" ng-src="{{card.image}}" style="width: 150px; height: 150px; " />
+                </div>
+            </md-card-title-media>
+        </md-card-title>
+        <div ng-include src="'views/cards/cardCallToAction.html'"></div>
     </div>
     <div class="editActionBlock" ng-show="card.blockEdit" ng-include src="'views/cards/cardEditOptionsBottomSheet.html'"></div>
 </md-card>

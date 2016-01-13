@@ -1,49 +1,32 @@
 <md-card>
-    <md-card-header>
-        <md-card-title-media>
-            <div class="md-media-lg card-media">
-                <img class="thumbnail md-whiteframe-z1" src="http://1.gravatar.com/avatar/a11ed7e9f44c3bb20aadf4185a245aaf?s=150&d=mm&r=g" />
-            </div>
-        </md-card-title-media>
-        <md-card-header-text>
-            <span class="md-title">
-                <input type="text" ng-model="card.title" ng-show="card.blockEdit"/>
-                <span type="text" ng-show="!card.blockEdit">{{card.title}}</span>
-            </span>
-            <span class="md-subhead">
-                <input type="text" ng-model="card.site" ng-show="card.blockEdit"/>
-                <span type="text" ng-show="!card.blockEdit">{{card.site}}</span>
-            </span>
-        </md-card-header-text>
-        <md-menu layout-align="right end" md-position-mode="target-right target">
-            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                <md-icon md-svg-icon="menu:more"></md-icon>
-            </md-button>
-            <md-menu-content>
-                <md-menu-item>
-                    <md-button ng-click="card.blockEdit = !card.blockEdit">Edit Card</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="card.type = 'summary_large_image'">Summary_Large_Image</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="card.type = 'gallery_card'">Gallary_Card</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="card.type = 'summary_card'">Summary_Card</md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
-    </md-card-header>
-    <img ng-src="{{card.image}}" style="height: 300px;" />
-    <md-card-title>
-        <md-card-title-text>
-            <span class="md-title">{{card.title}}</span>
-            <span class="md-subhead">{{card.description}}</span>
-        </md-card-title-text>
-        <span></span>
-    </md-card-title>
-    <md-card-actions layout="row" layout-align="end center">
-        <md-button class="md-raised md-primary">View on Web</md-button>
-    </md-card-actions>
+    <div ng-class="{dotted : card.blockEdit}">
+        <md-card-header>
+            <md-card-title-media>
+                <div class="md-media-lg card-media">
+                    <img class="thumbnail md-whiteframe-z1" src="http://1.gravatar.com/avatar/a11ed7e9f44c3bb20aadf4185a245aaf?s=150&d=mm&r=g" />
+                </div>
+            </md-card-title-media>
+            <md-card-header-text>
+                <span class="md-title">
+                    <input type="text" ng-model="card.title" ng-show="card.blockEdit"/>
+                    <span type="text" ng-show="!card.blockEdit">{{card.title}}</span>
+                </span>
+                <span class="md-subhead">
+                    <input type="text" ng-model="card.site" ng-show="card.blockEdit"/>
+                    <span type="text" ng-show="!card.blockEdit">{{card.site}}</span>
+                </span>
+            </md-card-header-text>
+            <div ng-include src="'views/cards/cardOptionsMenu.html'"></div>
+        </md-card-header>
+        <img ng-src="{{card.image}}" style="height: 300px;" />
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-title">{{card.title}}</span>
+                <span class="md-subhead">{{card.description}}</span>
+            </md-card-title-text>
+            <span></span>
+        </md-card-title>
+        <div ng-include src="'views/cards/cardCallToAction.html'"></div>
+    </div>
+    <div class="editActionBlock" ng-show="card.blockEdit" ng-include src="'views/cards/cardEditOptionsBottomSheet.html'"></div>
 </md-card>

@@ -1,0 +1,11 @@
+<md-card-actions layout="row" layout-align="end center">
+    <md-button class="md-raised md-primary" ng-show="!card.blockEdit">{{card.callToAction}}</md-button>
+    <md-menu ng-show="card.blockEdit" layout-align="right end" md-position-mode="target-right target">
+        <md-button class="md-raised md-primary" ng-click="$mdOpenMenu($event)">{{card.callToAction}}</md-button>
+        <md-menu-content>
+            <md-menu-item ng-repeat="option in callToActionOptions">
+                <md-button ng-click="$parent.card.callToAction=option">{{option}}</md-button>
+            </md-menu-item>
+        </md-menu-content>
+    </md-menu>
+</md-card-actions>

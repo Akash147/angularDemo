@@ -13,6 +13,13 @@
   border-bottom:1px solid #cacaca;
 }
 input:focus         { outline:none; }
+md-input-container.editable-controls {
+  padding: 0;
+}
+
+md-input-container.editable-controls [ng-message] {
+  position: static;
+}
 .mask {
     width: 100%;
     height: 100%;
@@ -34,9 +41,6 @@ hp-card, .hp-card {
 hp-card img{
     display: block;
     margin: 0 auto;
-}
-hp-card.notPublished md-card {
-    background: #cacaca;
 }
 .thumbnail {
     width: 50px;

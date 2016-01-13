@@ -16,25 +16,7 @@
                 <span type="text" ng-show="!card.blockEdit">{{card.site}}</span>
             </span>
         </md-card-header-text>
-        <md-menu layout-align="right end" md-position-mode="target-right target">
-            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                <md-icon md-svg-icon="menu:more"></md-icon>
-            </md-button>
-            <md-menu-content>
-                <md-menu-item>
-                    <md-button ng-click="enableEdit(card, $event)">Edit Card</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="card.type = 'summary_large_image'">Summary_Large_Image</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="card.type = 'gallery_card'">Gallary_Card</md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="card.type = 'summary_card'">Summary_Card</md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
+        <div ng-include src="'views/cards/cardOptionsMenu.html'"></div>
     </md-card-header>
     <md-card-content layout-padding layout-wrap>
         <div layout="column">
@@ -61,9 +43,7 @@
         </md-card-title-text>
         <span></span>
     </md-card-title>
-    <md-card-actions layout="row" layout-align="end center">
-        <md-button class="md-raised md-primary">View on Web</md-button>
-    </md-card-actions>
+    <div ng-include src="'views/cards/cardCallToAction.html'"></div>
     </div>
     <div class="editActionBlock" ng-show="card.blockEdit" ng-include src="'views/cards/cardEditOptionsBottomSheet.html'"></div>
 </md-card>
