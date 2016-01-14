@@ -8,12 +8,12 @@
             </md-card-title-media>
             <md-card-header-text>
                 <span class="md-title">
-                    <input type="text" ng-model="card.title" ng-show="card.blockEdit"/>
-                    <span type="text" ng-show="!card.blockEdit">{{card.title}}</span>
+                    <a href="#" editable-text="card.site" buttons="no" ng-show="card.blockEdit">{{ card.site || 'Site Name' }}</a>
+                    <span type="text" ng-show="!card.blockEdit">{{card.site}}</span>
                 </span>
                 <span class="md-subhead">
-                    <input type="text" ng-model="card.site" ng-show="card.blockEdit"/>
-                    <span type="text" ng-show="!card.blockEdit">{{card.site}}</span>
+                    <a href="#" editable-text="card.siteDesc" buttons="no" ng-show="card.blockEdit">{{ card.siteDesc || 'Site Description' }}</a>
+                    <span type="text" ng-show="!card.blockEdit">{{card.siteDesc}}</span>
                 </span>
             </md-card-header-text>
             <div ng-include src="'views/cards/cardOptionsMenu.html'"></div>

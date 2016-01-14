@@ -62,6 +62,8 @@ public class FetchMetaInformation {
 			String src = element.getAttributeValue("src");
 			if(!src.startsWith("http"))
 				src = this.url.getProtocol() + "://" + this.url.getHost() + "/" + (src.startsWith("/")?src.replaceFirst("/",""):src);
+            if(src.contains("?"))
+                src = src.substring(0,src.indexOf("?"));
 			System.out.println("Image: " + src);
 			if(!Utilities.isEmptyString(src)){
 				try{
@@ -101,8 +103,12 @@ public class FetchMetaInformation {
 				toReturn.put("title", entry.getValue());
 		    else if(isDescription(entry.getKey()))
 		    	toReturn.put("description", entry.getValue());
-		    else if(isImage(entry.getKey()))
-		    	toReturn.put("image", entry.getValue());
+		    else if(isImage(entry.getKey())) {
+                String imageURL = entry.getValue();
+                if(imageURL.contains("?"))
+                    imageURL = imageURL.substring(0,imageURL.indexOf("?"));
+                toReturn.put("image", imageURL);
+            }
 		    else if(isLink(entry.getKey()))
 		    	toReturn.put("url", entry.getValue());
 			else if(isSiteName(entry.getKey()))
@@ -134,7 +140,8 @@ public class FetchMetaInformation {
 	}
 
 	private boolean isTitle(String key) {
-		if(key.contains("title"))
+		if(key.equals("og:title")||
+                key.equals("twitter:title"))
 			return true;
 		return false;
 	}
@@ -176,7 +183,7 @@ public class FetchMetaInformation {
 
 	public static void main(String[] args) throws IOException {
 //		String url = "http://www.wired.com/2016/01/how-to-survive-ces/";
-		String url = "http://www.onlinekhabar.com/2016/01/372478/";
+		String url = "http://www.wired.com/2016/01/life-is-strange-hard-choices/";
 //		String url = "http://myrepublica.com/feature-article/story/34602/prince-harry-to-visit-nepal-this-spring.html";
 		FetchMetaInformation meta = new FetchMetaInformation(url);
 		for (Map.Entry<String, String> entry : meta.getMeta().entrySet()) {

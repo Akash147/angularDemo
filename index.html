@@ -68,10 +68,11 @@ hp-card img{
                                     </md-input-container>
                                 </form>
                             </div>
+                            <md-progress-linear md-mode="indeterminate" ng-show="newCardProcessing"></md-progress-linear>
                         </md-card-content>
                         <md-card-actions layout="row" layout-align="end center">
                             <md-switch class="md-primary" ng-model="publishedOnly.meta.published">Published</md-switch>    
-                            <md-button class="md-raised md-primary" ng-disabled="newCardForm.newCardURL.$error.required || newCardForm.newCardURL.$error.url" ng-click="newButton()">Create</md-button>
+                            <md-button class="md-raised md-primary" ng-disabled="newCardForm.newCardURL.$error.required || newCardForm.newCardURL.$error.url || newCardProcessing" ng-click="newButton()">Create</md-button>
                         </md-card-actions>
                     </md-card>
                 </div>

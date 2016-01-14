@@ -27,7 +27,7 @@
                     <httpConnector>
                         <port>8888</port>
                     </httpConnector>
-                    <reload>manual</reload>
+                    <reload>automatic</reload>
                     <scanIntervalSeconds>2</scanIntervalSeconds>
                 </configuration>
             </plugin>
