@@ -27,10 +27,10 @@ app.factory('remoteFactory', ['$http', function($http){
 app.controller('SimpleController', function($scope,remoteFactory) {
     $scope.showMaskingProgress = false;
     $scope.cards = [
-    {title:'Ckash Shrestha', description:'C Description goes here', image:'images/3.jpg', type:'summary_card', meta:{published: true}, callToAction: 'View'},
-    {title:'Akash Shrestha', description:'A Description goes here', image:'images/2.jpg', type:'summary_large_image', meta:{published: false}, callToAction: 'View'},
-    {title:'Bkash Shrestha', description:'B Description goes here', image:'images/1.jpg', type:'gallery_card', meta:{published: false}, callToAction: 'View'},
-    {title:'Dkash Shrestha', description:'D Description goes here', image:'images/4.jpg', type:'summary_large_image', meta:{published: false}, callToAction: 'View'}
+    // {title:'Ckash Shrestha', description:'C Description goes here', image:'images/3.jpg', type:'summary_card', meta:{published: true}, callToAction: 'View'},
+    // {title:'Akash Shrestha', description:'A Description goes here', image:'images/2.jpg', type:'summary_large_image', meta:{published: false}, callToAction: 'View'},
+    // {title:'Bkash Shrestha', description:'B Description goes here', image:'images/1.jpg', type:'gallery_card', meta:{published: false}, callToAction: 'View'},
+    // {title:'Dkash Shrestha', description:'D Description goes here', image:'images/4.jpg', type:'summary_large_image', meta:{published: false}, callToAction: 'View'}
     ];
     $scope.newButton = function(){
         $scope.showMaskingProgress = true;
@@ -40,7 +40,7 @@ app.controller('SimpleController', function($scope,remoteFactory) {
         remoteFactory.getMetaForNew('{uri: "'+url+'"}').then( function(data){
             console.log(data);
             $scope.showMaskingProgress = false;
-            var newCard= {type: 'summary_large_image', blockEdit:true, callToAction: 'View'};
+            var newCard= {type: 'summary_large_image', blockEdit:false, callToAction: 'View', meta:{published:true}};
             if(typeof data.title != 'undefined')
                 newCard.title = data.title;
             if(typeof data.description != 'undefined')
