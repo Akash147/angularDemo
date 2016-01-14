@@ -55,6 +55,7 @@ public class CardsServlet extends HttpServlet {
 
             case "new":
                 String jsonCard = req.getParameter("data");
+				resp.getWriter().print(jsonCard);
                 if(!Utilities.isEmptyString(jsonCard)){
                     Card card = new Gson().fromJson(jsonCard, Card.class);
                     CardsDAO.insertCard(card);
@@ -63,8 +64,10 @@ public class CardsServlet extends HttpServlet {
 
             case "getAll":
                 resp.getWriter().print(new Gson().toJson(CardsDAO.getPublishedCards()));
+				break;
 
 			default:
+				resp.sendError(404);
 				break;
 			}
 		}

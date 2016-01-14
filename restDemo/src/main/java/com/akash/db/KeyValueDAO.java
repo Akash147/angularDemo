@@ -28,10 +28,10 @@ public class KeyValueDAO {
     }
 
     public static void insertKeyValue(String key, String value) {
-        if(!mInstance.map.containsKey(key)){
+//        if(!mInstance.map.containsKey(key)){
             mInstance.map.put(key, value);
             mInstance.db.commit();
-        }
+//        }
     }
 
     public static KeyValue getKeyValue(String serverKey) {

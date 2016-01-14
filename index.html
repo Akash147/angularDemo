@@ -76,8 +76,8 @@ hp-card img{
                     </md-card>
                 </div>
 
-                <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in cards | filter:publishedOnly ">
-                    <hp-card card="card" ng-class='{notPublished: !card.meta.published}' type="{{card.type}}" action="newButton()"></hp-card>
+                <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in cards | filter:publishedOnly">
+                    <hp-card card="card" ng-class='{notPublished: !card.meta.published}' type="{{card.type}}" delete-card="deleteCard($index)" save-card="saveCard($index)"></hp-card>
                 </div>
             </md-content>
             <!-- Angular Material requires Angular.js Libraries -->

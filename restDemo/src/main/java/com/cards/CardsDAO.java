@@ -14,11 +14,13 @@ public class CardsDAO {
 	public static void insertCard(Card card){
 		if(card!=null) {
 			CardCollection collection = getStoredCards();
-			if(!collection.getCards().contains(card))
-				collection.getCards().add(card);
-			else {
+			if(!collection.getCards().contains(card)) {
+                card.assignNewId();
+                collection.getCards().add(card);
+            }
+            else {
 				int index = collection.getCards().indexOf(card);
-				collection.getCards().add(index, card);
+				collection.getCards().set(index, card);
 			}
 			
 			KeyValueDAO.insertKeyValue(SERVER_KEY, new Gson().toJson(collection));

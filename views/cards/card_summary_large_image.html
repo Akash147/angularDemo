@@ -1,4 +1,4 @@
-<md-card>
+<md-card ng-mouseenter="hover = 'md-whiteframe-z3'" ng-mouseleave="hover = ''" ng-class="hover">
     <div ng-class="{dotted : card.blockEdit}">
         <md-card-header>
             <md-card-title-media>
@@ -18,7 +18,7 @@
             </md-card-header-text>
             <div ng-include src="'views/cards/cardOptionsMenu.html'"></div>
         </md-card-header>
-        <img ng-src="{{card.image}}" style="height: 300px;" />
+        <img ng-src="http://thumbor.thumborize.me/unsafe/484x300/smart/{{card.image}}" style="height: 300px;" />
         <md-card-title>
             <md-card-title-text>
                 <span class="md-title">{{card.title}}</span>

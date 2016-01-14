@@ -1,5 +1,6 @@
 package com.cards.model;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class Card {
@@ -21,6 +22,7 @@ public class Card {
 	private String imageCaption1;
 	private String imageCaption2;
 	private String imageCaption3;
+	private Map<String, String> meta;
 	
 	public String getType() {
 		return type;
@@ -124,6 +126,12 @@ public class Card {
 	public void setImageCaption3(String imageCaption3) {
 		this.imageCaption3 = imageCaption3;
 	}
+	public Map<String, String> getMeta() {
+		return meta;
+	}
+	public void setMeta(Map<String, String> meta) {
+		this.meta = meta;
+	}
 	
 	public static Card getNewCard(String type, String title, String description) {
 		Card card = new Card();
@@ -137,4 +145,27 @@ public class Card {
 	private static long getUniqueID(){
 		return System.currentTimeMillis();
 	}
+
+    @Override
+    public boolean equals(Object object) {
+        boolean sameSame = false;
+
+        if (object != null && object instanceof Card) {
+            Card other = (Card) object;
+            if(other.id!=0){
+                if(other.id==this.id)
+                    sameSame = true;
+            }
+            else if(other.getTitle().equals(this.getTitle()) &&
+                    other.getDescription().equals(this.getDescription()) &&
+                    other.getType().equals(this.getType()))
+                sameSame = true;
+        }
+
+        return sameSame;
+    }
+
+    public void assignNewId() {
+        this.id = getUniqueID();
+    }
 }
