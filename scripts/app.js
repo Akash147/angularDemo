@@ -2,6 +2,7 @@ var app = angular.module('myApp', ['ngMaterial', 'xeditable','ngFileUpload','tex
 app.constant('globalVar', {cardViewsPath: 'views/cards/'});
 
 app.factory('remoteFactory', ['$http', function($http){
+    // var _url="http://27.34.8.132:8888/cards/";
     var _url="http://localhost:8888/cards/";
     var service= {};
 
@@ -58,12 +59,23 @@ app.controller('SimpleController', function($scope,remoteFactory) {
 
     $scope.init = function(){
         remoteFactory.getCards().then(function(data){
-            console.log(data);
             $scope.cards = data.cards;
             $scope.showMaskingProgress = false;
+            dataTypeConvert();
+            console.log($scope.cards);
         },function(response){
             $scope.showMaskingProgress = false;
         });
+
+        dataTypeConvert = function(){
+            for (var i = 0; i < $scope.cards.length; i++) {
+                // $scope.cards[i].meta.published = Boolean($scope.cards[i].meta.published==='true');
+                if($scope.cards[i].meta.startTime!=undefined)
+                    $scope.cards[i].meta.startTime = new Date($scope.cards[i].meta.startTime);
+                if($scope.cards[i].meta.endTime!=undefined)
+                    $scope.cards[i].meta.endTime = new Date($scope.cards[i].meta.endTime);
+            };
+        };
     };
 
     $scope.filterCards = function(card){

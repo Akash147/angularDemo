@@ -152,7 +152,7 @@ public class Card {
 
         if (object != null && object instanceof Card) {
             Card other = (Card) object;
-            if(other.id!=0){
+            if(other.id!=0 && this.id!=0){
                 if(other.id==this.id)
                     sameSame = true;
             }

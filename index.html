@@ -47,7 +47,7 @@ hp-card img{
     border-color: #eaeaea;
 }
 
-.tabbed-settings md-content{
+.tabbed-settings md-content, .tabbed-settings md-datepicker{
     background: #E0E6EB;
 }
     </style>
@@ -76,7 +76,7 @@ hp-card img{
                             <md-progress-linear md-mode="indeterminate" ng-show="newCardProcessing"></md-progress-linear>
                         </md-card-content>
                         <md-card-actions layout="row" layout-align="end center">
-                            <md-switch class="md-primary" ng-model="publishedOnlySwitch" ng-init="publishedOnlySwitch=true">Published</md-switch>    
+                            <md-switch class="md-primary" md-no-ink ng-model="publishedOnlySwitch" ng-init="publishedOnlySwitch=true">Published</md-switch>    
                             <md-button class="md-raised md-primary" ng-disabled="newCardForm.newCardURL.$error.required || newCardForm.newCardURL.$error.url || newCardProcessing" ng-click="newButton()">Create</md-button>
                         </md-card-actions>
                     </md-card>
