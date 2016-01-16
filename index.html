@@ -45,7 +45,12 @@ hp-card img{
 .dotted{
     border-style: dashed;
     border-color: #eaeaea;
-}</style>
+}
+
+.tabbed-settings md-content{
+    background: #E0E6EB;
+}
+    </style>
         </head>
         <body layout="column" ng-app="myApp" ng-controller="SimpleController" ng-cloak layout-fill>
             <div class="mask" layout="row" layout-wrap layout-align="center center" ng-show="showMaskingProgress">
@@ -71,13 +76,13 @@ hp-card img{
                             <md-progress-linear md-mode="indeterminate" ng-show="newCardProcessing"></md-progress-linear>
                         </md-card-content>
                         <md-card-actions layout="row" layout-align="end center">
-                            <md-switch class="md-primary" ng-model="publishedOnly.meta.published">Published</md-switch>    
+                            <md-switch class="md-primary" ng-model="publishedOnlySwitch" ng-init="publishedOnlySwitch=true">Published</md-switch>    
                             <md-button class="md-raised md-primary" ng-disabled="newCardForm.newCardURL.$error.required || newCardForm.newCardURL.$error.url || newCardProcessing" ng-click="newButton()">Create</md-button>
                         </md-card-actions>
                     </md-card>
                 </div>
 
-                <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in cards | filter:publishedOnly">
+                <div class='md-padding' layout="row" layout-wrap layout-align="center start" ng-repeat="card in cards | filter:filterCards">
                     <hp-card card="card" ng-class='{notPublished: !card.meta.published}' type="{{card.type}}" delete-card="deleteCard($index)" save-card="saveCard($index)"></hp-card>
                 </div>
             </md-content>

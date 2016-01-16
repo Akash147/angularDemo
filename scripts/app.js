@@ -58,11 +58,18 @@ app.controller('SimpleController', function($scope,remoteFactory) {
 
     $scope.init = function(){
         remoteFactory.getCards().then(function(data){
+            console.log(data);
             $scope.cards = data.cards;
             $scope.showMaskingProgress = false;
         },function(response){
             $scope.showMaskingProgress = false;
         });
+    };
+
+    $scope.filterCards = function(card){
+        if(card.blockEdit)
+            return true;
+        return ((card.meta.published+'').toLowerCase() == ($scope.publishedOnlySwitch+'').toLowerCase());
     };
 
     $scope.newButton = function(){
@@ -143,6 +150,7 @@ app.directive('hpCard', ['globalVar','$timeout', function(globalVar,$timeout) {
             'Play',
             'Watch'
         ];
+        $scope.cardTypes = ['summary_large_image', 'summary_card', 'gallery_card'];
         $scope.enableEdit = function($event){
             $scope.backUpCard = JSON.parse(JSON.stringify($scope.card));
             $scope.card.blockEdit = !$scope.card.blockEdit;
