@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 import javax.servlet.ServletException;
@@ -56,16 +57,27 @@ public class CardsServlet extends HttpServlet {
 
             case "new":
                 String jsonCard = req.getParameter("data");
-				resp.getWriter().print(jsonCard);
                 if(!Utilities.isEmptyString(jsonCard)){
                     Card card = new Gson().fromJson(jsonCard, Card.class);
                     CardsDAO.insertCard(card);
                 }
                 break;
 
+            case "delete":
+                String jsonCar = req.getParameter("data");
+                if(!Utilities.isEmptyString(jsonCar)){
+                    Card card = new Gson().fromJson(jsonCar, Card.class);
+                    CardsDAO.deleteCard(card);
+                }
+                break;
+
             case "getAll":
-                resp.getWriter().print(new Gson().toJson(CardsDAO.getPublishedCards()));
-				break;
+                try {
+                    resp.getWriter().print(new Gson().toJson(CardsDAO.getPublishedCards()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                break;
 
 			default:
 				resp.sendError(404);
