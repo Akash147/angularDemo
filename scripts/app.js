@@ -116,13 +116,25 @@ app.controller('SimpleController', function($scope,remoteFactory) {
         if(card.sandboxed){ //new card not in db
             $scope.cards.splice(index,1);
         }
+        else {
+            console.log('remote call to delete');
+        }
+        $scope.init();
     };
 
     $scope.saveCard = function(index){
         if(index<0 || index>$scope.cards.length-1)
             return;
         var card = $scope.cards[index];
-        return remoteFactory.saveCard(JSON.stringify(card));
+        var promise = remoteFactory.saveCard(JSON.stringify(card));
+        promise.then(function(response){
+            $scope.init();
+            return response;
+        }, function(response){
+            $scope.init();
+            return response;
+        });
+        return promise;
     };
 
     $scope.init();
@@ -201,6 +213,17 @@ app.directive('hpCard', ['globalVar','$timeout', function(globalVar,$timeout) {
             }, function(response){
                 console.log(response);
             });
+        };
+        $scope.onDateToggle = function(dateOptionsEnabled, $event) {
+            console.log(dateOptionsEnabled + ' changed' );
+            if(dateOptionsEnabled){
+                $scope.card.meta.startTime = new Date();
+                $scope.card.meta.endTime = new Date();
+            }
+            else{
+                delete $scope.card.meta.startTime;
+                delete $scope.card.meta.endTime;
+            }
         };
     }]
   };

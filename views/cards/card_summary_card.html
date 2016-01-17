@@ -3,7 +3,7 @@
         <md-card-header>
             <md-card-title-media>
                 <div class="md-media-lg card-media">
-                    <img ng-click="changeImage(card)" class="thumbnail md-whiteframe-z1" src="http://1.gravatar.com/avatar/a11ed7e9f44c3bb20aadf4185a245aaf?s=150&d=mm&r=g" />
+                    <img ng-click="changeImage('iconImage')" class="thumbnail md-whiteframe-z1" ng-src="{{card.iconImage || 'http://placehold.it/50x50'}}" />
                 </div>
             </md-card-title-media>
             <md-card-header-text>

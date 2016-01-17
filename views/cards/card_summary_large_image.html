@@ -3,7 +3,7 @@
         <md-card-header>
             <md-card-title-media>
                 <div class="md-media-lg card-media">
-                    <img class="thumbnail md-whiteframe-z1" src="http://1.gravatar.com/avatar/a11ed7e9f44c3bb20aadf4185a245aaf?s=150&d=mm&r=g" />
+                    <img ng-click="changeImage('iconImage')" class="thumbnail md-whiteframe-z1" ng-src="{{card.iconImage || 'http://placehold.it/50x50'}}" />
                 </div>
             </md-card-title-media>
             <md-card-header-text>
@@ -18,11 +18,17 @@
             </md-card-header-text>
             <div ng-include src="'views/cards/cardOptionsMenu.html'"></div>
         </md-card-header>
-        <img ng-src="http://thumbor.thumborize.me/unsafe/484x300/smart/{{card.image}}" style="height: 300px;" />
+        <img ng-click="changeImage('image')" ng-src="http://thumbor.thumborize.me/unsafe/484x300/smart/{{card.image}}" style="height: 300px;" />
         <md-card-title>
             <md-card-title-text>
-                <span class="md-title">{{card.title}}</span>
-                <span class="md-subhead">{{card.description}}</span>
+                <span class="md-title">
+                    <a href="#" editable-text="card.title" buttons="no" ng-show="card.blockEdit">{{ card.title || 'Content Title' }}</a>
+                    <span type="text" ng-show="!card.blockEdit">{{card.title}}</span>
+                </span>
+                <span class="md-subhead">
+                    <a href="#" editable-textarea="card.description" ng-show="card.blockEdit">{{ card.description || 'Description' }}</a>
+                    <span type="text" ng-show="!card.blockEdit">{{card.description}}</span>
+                </span>
             </md-card-title-text>
             <span></span>
         </md-card-title>

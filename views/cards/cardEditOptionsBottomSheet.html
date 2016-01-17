@@ -20,7 +20,7 @@
             </md-tab>
             <md-tab label="Date">
                 <md-content class="md-padding" style="padding-bottom: 100px;">
-                    <md-switch md-no-ink ng-model="dateOptionsEnabled" ng-init="dateOptionsEnabled=!(card.meta.startTime==undefined)" ng-change="onDateChange(data.cb6)">Enable Date</md-switch>
+                    <md-switch md-no-ink ng-model="dateOptionsEnabled" ng-init="dateOptionsEnabled=!(card.meta.startTime==undefined)" ng-change="onDateToggle(dateOptionsEnabled)">Enable Date</md-switch>
                     <div layout="row" flex>
                         <div>
                             <h4>Start Date</h4>

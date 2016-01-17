@@ -3,7 +3,7 @@
     <md-card-header>
         <md-card-title-media>
             <div class="md-media-lg card-media">
-                <img class="thumbnail md-whiteframe-z1" src="http://1.gravatar.com/avatar/a11ed7e9f44c3bb20aadf4185a245aaf?s=150&d=mm&r=g" />
+                <img ng-click="changeImage('iconImage')" class="thumbnail md-whiteframe-z1" ng-src="{{card.iconImage || 'http://placehold.it/50x50'}}" />
             </div>
         </md-card-title-media>
         <md-card-header-text>
@@ -21,12 +21,12 @@
     <md-card-content layout-padding layout-wrap>
         <div layout="column">
             <div layout="row">
-                <img flex src="http://placehold.it/150x150" />
-                <img flex src="http://placehold.it/150x150" />
+                <img flex ng-click="changeImage('image')" ng-src="{{card.image || 'http://placehold.it/150x150'}}" />
+                <img flex ng-click="changeImage('image1')" ng-src="{{card.image1 || 'http://placehold.it/150x150'}}" />
             </div>
             <div layout="row">
-                <img flex src="http://placehold.it/150x150" />
-                <img flex src="http://placehold.it/150x150" />
+                <img flex ng-click="changeImage('image2')" ng-src="{{card.image2 || 'http://placehold.it/150x150'}}" />
+                <img flex ng-click="changeImage('image3')" ng-src="{{card.image3 || 'http://placehold.it/150x150'}}" />
             </div>
         </div>
     </md-card-content>
