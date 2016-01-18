@@ -38,14 +38,14 @@ public class CardsDAO {
 		for(Card card : collection.getCards()){
             if(card.getMeta().containsKey("published") &&
                     card.getMeta().get("published").equalsIgnoreCase("true")) {
-                if(card.getMeta().containsKey("startTime") && card.getMeta().containsKey("endTime")){
-                    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
-                    if( fmt.format(today).equals(fmt.format(parseDate(card.getMeta().get("startTime")))) )
-                        publishedCollection.getCards().add(card);
-                }
-                else {
+//                if(card.getMeta().containsKey("startTime") && card.getMeta().containsKey("endTime")){
+//                    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+//                    if( fmt.format(today).equals(fmt.format(parseDate(card.getMeta().get("startTime")))) )
+//                        publishedCollection.getCards().add(card);
+//                }
+//                else {
                     publishedCollection.getCards().add(card);
-                }
+//                }
             }
 		}
 		return publishedCollection;

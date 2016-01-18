@@ -81,10 +81,12 @@ app.controller('SimpleController', function ($scope, remoteFactory) {
         dataTypeConvert = function () {
             for (var i = 0; i < $scope.cards.length; i++) {
                 // $scope.cards[i].meta.published = Boolean($scope.cards[i].meta.published==='true');
-                if ($scope.cards[i].meta.startTime != undefined)
-                    $scope.cards[i].meta.startTime = new Date($scope.cards[i].meta.startTime);
-                if ($scope.cards[i].meta.endTime != undefined)
-                    $scope.cards[i].meta.endTime = new Date($scope.cards[i].meta.endTime);
+/*                if ($scope.cards[i].meta.startTime != undefined){
+                    $scope.cards[i].startTimeCompat = new Date($scope.cards[i].meta.startTime);
+                }
+                if ($scope.cards[i].meta.endTime != undefined){
+                    $scope.cards[i].endTimeCompat = new Date($scope.cards[i].meta.endTime);
+                }*/
             }
             ;
         };
@@ -227,6 +229,7 @@ app.directive('hpCard', ['globalVar', '$timeout', function (globalVar, $timeout)
             };
             $scope.save = function ($event) {
                 console.log('Save ');
+                $scope.dateReEval();
                 $scope.saveCard().then(function (response) {
                     $scope.backUpCard = null;
                     $scope.card.blockEdit = false;
@@ -238,10 +241,26 @@ app.directive('hpCard', ['globalVar', '$timeout', function (globalVar, $timeout)
             $scope.onDateToggle = function (dateOptionsEnabled, $event) {
                 console.log(dateOptionsEnabled + ' changed');
                 if (dateOptionsEnabled) {
-                    $scope.card.meta.startTime = new Date();
-                    $scope.card.meta.endTime = new Date();
+                    if($scope.card.meta.startTime==undefined){
+                        var d = new Date();
+                        $scope.card.meta.startTime = d.getTime();
+                    }
+                    if($scope.card.meta.endTime==undefined){
+                        var d = new Date();
+                        d.setDate(d.getDate() + 1);
+                        $scope.card.meta.endTime = d.getTime();
+                    }
+                    $scope.card.startTimeCompat = new Date(Number($scope.card.meta.startTime));
+                    $scope.card.endTimeCompat = new Date(Number($scope.card.meta.endTime));
                 }
                 else {
+                    delete $scope.card.startTimeCompat;
+                    delete $scope.card.endTimeCompat;
+                }
+            };
+
+            $scope.dateReEval = function(){
+                if($scope.card.startTimeCompat == undefined){
                     delete $scope.card.meta.startTime;
                     delete $scope.card.meta.endTime;
                 }
@@ -260,6 +279,12 @@ app.directive('hpCard', ['globalVar', '$timeout', function (globalVar, $timeout)
                     console.log('You decided to keep your debt.');
                 });
             };
+
+            $scope.init = function(){
+                var dateEnabled=!($scope.card.meta.startTime==undefined);
+                $scope.onDateToggle(dateEnabled);
+            };
+            $scope.init();
         }]
     };
 }]);

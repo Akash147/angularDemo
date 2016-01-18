@@ -62,23 +62,23 @@ hp-card img{
             <md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column" flex>
                 <div class="md-padding" layout="row" layout-wrap layout-align="center start">
                     <md-card class="hp-card">
-                        <md-card-content layout-padding>
-                            <div layout="column">
-                                <form name="newCardForm">
+                        <form name="newCardForm">
+                            <md-card-content layout-padding>
+                                <div layout="column">
                                     <md-input-container class="md-block">
                                         <input name="newCardURL" ng-model="newCardURL" type="url" placeholder="Create card here....." required/>
                                         <div ng-show="newCardForm.newCardURL.$error.url">
                                             <div ng-message="required">* URL required</div>
                                         </div>
                                     </md-input-container>
-                                </form>
-                            </div>
-                            <md-progress-linear md-mode="indeterminate" ng-show="newCardProcessing"></md-progress-linear>
-                        </md-card-content>
-                        <md-card-actions layout="row" layout-align="end center">
-                            <md-switch class="md-primary" md-no-ink ng-model="publishedOnlySwitch" ng-init="publishedOnlySwitch=true">Published</md-switch>    
-                            <md-button class="md-raised md-primary" ng-disabled="newCardForm.newCardURL.$error.required || newCardForm.newCardURL.$error.url || newCardProcessing" ng-click="newButton()">Create</md-button>
-                        </md-card-actions>
+                                </div>
+                                <md-progress-linear md-mode="indeterminate" ng-show="newCardProcessing"></md-progress-linear>
+                            </md-card-content>
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-switch class="md-primary" md-no-ink ng-model="publishedOnlySwitch" ng-init="publishedOnlySwitch=true">Published</md-switch>
+                                <md-button type="submit" class="md-raised md-primary" ng-disabled="newCardForm.newCardURL.$error.required || newCardForm.newCardURL.$error.url || newCardProcessing" ng-click="newButton()">Create</md-button>
+                            </md-card-actions>
+                        </form>
                     </md-card>
                 </div>
 
