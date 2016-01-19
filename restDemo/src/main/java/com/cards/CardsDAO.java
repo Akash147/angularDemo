@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class CardsDAO {
@@ -34,18 +35,30 @@ public class CardsDAO {
 	public static CardCollection getPublishedCards() throws ParseException {
 		CardCollection publishedCollection = CardCollection.getEmptyCardCollection();
 		CardCollection collection = getStoredCards();
-        Date today = new Date();
+
+        Calendar today = Calendar.getInstance();
+        today.setTime(new Date());
 		for(Card card : collection.getCards()){
             if(card.getMeta().containsKey("published") &&
                     card.getMeta().get("published").equalsIgnoreCase("true")) {
-//                if(card.getMeta().containsKey("startTime") && card.getMeta().containsKey("endTime")){
-//                    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
-//                    if( fmt.format(today).equals(fmt.format(parseDate(card.getMeta().get("startTime")))) )
-//                        publishedCollection.getCards().add(card);
-//                }
-//                else {
+                if(card.getMeta().containsKey("startTime") && card.getMeta().containsKey("endTime")){
+                    long startTime = Long.parseLong(card.getMeta().get("startTime"));
+                    Calendar calStart = Calendar.getInstance();
+                    calStart.setTimeInMillis(startTime);
+
+                    long endTime = Long.parseLong(card.getMeta().get("endTime"));
+                    Calendar calEnd = Calendar.getInstance();
+                    calEnd.setTimeInMillis(endTime);
+
+                    if(isNumberBetween(today.get(Calendar.YEAR), calStart.get(Calendar.YEAR), calEnd.get(Calendar.YEAR)) &&
+                            isNumberBetween(today.get(Calendar.MONTH), calStart.get(Calendar.MONTH), calEnd.get(Calendar.MONTH)) &&
+                            isNumberBetween(today.get(Calendar.DAY_OF_MONTH), calStart.get(Calendar.DAY_OF_MONTH), calEnd.get(Calendar.DAY_OF_MONTH)) ) {
+                        publishedCollection.getCards().add(card);
+                    }
+                }
+                else {
                     publishedCollection.getCards().add(card);
-//                }
+                }
             }
 		}
 		return publishedCollection;
@@ -101,6 +114,12 @@ public class CardsDAO {
 
         return df.parse( input );
 
+    }
+
+    private static boolean isNumberBetween(int x, int a, int b){
+        if(x>=a && x<=b)
+            return true;
+        return false;
     }
 
 /*	
